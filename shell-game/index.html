@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shell Game</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+    <script src="https://pixijs.download/v7.4.0/pixi.js"></script>
+  </head>
+  <body>
+    <script>
+      function createCursor() {
+        let cursor = new PIXI.Graphics();
+        cursor.beginFill(0x00ff00);
+        cursor.drawRect(150, 34, 10, 3);
+        cursor.endFill();
+        // cursor.position.set(10, 10);
+        // cursor.pivot.set(-10, -10);
+        // cursor.scale.set(1, 1);
+        return cursor;
+      }
+
+      function createText(text) {
+        let cursor = new PIXI.Text();
+      }
+
+      let app = new PIXI.Application({
+        resizeTo: window,
+        backgroundColor: 0x202020,
+      });
+      app.eventMode = "static";
+      document.body.appendChild(app.view);
+
+      let cursor = createCursor();
+      app.stage.addChild(cursor);
+
+      app.ticker.add((delta) => {
+        cursor.alpha = 0.5 + Math.sin(app.ticker.lastTime / 144) / 2;
+      });
+
+      PIXI.Assets.load("/mc.fnt").then(() => {
+        const bitmapFontText = new PIXI.BitmapText("Wake up, Neo. . .", {
+          fontName: "Minecraft",
+          fontSize: 18,
+          align: "left",
+          tint: 0x00ff00
+        });
+
+        bitmapFontText.x = 10;
+        bitmapFontText.y = 20;
+
+        app.stage.addChild(bitmapFontText);
+      });
+    </script>
+  </body>
+</html>
